@@ -121,7 +121,7 @@
     { text: 'Dni do wydarzenia', value: 'daysToEvent' },
   ])
 
-  const campaign = ref<Campaign>(new Campaign(tomorrow, dateAfterXDays(tomorrow, 7)))
+  const campaign = ref<Campaign>(new Campaign(tomorrow, dateAfterXDays(tomorrow, 7), minDayBudget))
 
   const valid = ref(false)
   const formSended = ref(false)
@@ -146,9 +146,7 @@
   const close = () => {
     valid.value = false
     formSended.value = false
-    campaign.value = new Campaign(tomorrow, dateAfterXDays(tomorrow, 7))
-    campaign.value.duration = daysBetween(campaign.value.startDate, campaign.value.endDate)
-    campaign.value.totalBudget = campaign.value.duration * minDayBudget
+    campaign.value = new Campaign(tomorrow, dateAfterXDays(tomorrow, 7), minDayBudget)
   }
 
   watch(() => campaign.value.duration, (newDuration, oldDuration) => {
@@ -165,11 +163,6 @@
         campaign.value.totalBudget = campaign.value.duration * minDayBudget
       }
     }
-  })
-
-  onBeforeMount(() => {
-    campaign.value.duration = daysBetween(campaign.value.startDate, campaign.value.endDate)
-    campaign.value.totalBudget = campaign.value.duration * minDayBudget
   })
 </script>
 

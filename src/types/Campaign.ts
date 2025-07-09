@@ -1,3 +1,5 @@
+import { daysBetween } from '@/helpers/dates'
+
 export class Campaign {
   startDate: Date
   endDate: Date
@@ -8,11 +10,12 @@ export class Campaign {
   constructor (
     startDate: Date,
     endDate: Date,
+    minDayBudget: number,
   ) {
     this.startDate = startDate
     this.endDate = endDate
-    this.totalBudget = 0
-    this.duration = 0
+    this.duration = daysBetween(this.startDate, this.endDate)
+    this.totalBudget = this.duration * minDayBudget
     this.acceptTerms = false
   }
 }
